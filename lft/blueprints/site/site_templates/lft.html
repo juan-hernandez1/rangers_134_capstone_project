@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<div class="container-fluid justify-content-center">
+    <div class="row lft-body p-5">
+        <div class="col-3 ms-5 d-flex flex-column justify-content-center">
+            <h2>Welcome To LIFT</h2>
+            {% if current_user.is_authenticated %}
+            <h5>Your #1 Resource For All Things Workout!</h5>
+            <a href="/vault" class="btn btn-outline-dark mt-3">Enter</a>
+            {% else %}
+            <h5>Please Sign In To Access The Vault</h5>
+            <a href="/signin" class="btn btn-outline-dark mt-3">Sign In</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}

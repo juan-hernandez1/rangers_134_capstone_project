@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row mt-5 mb-5 p-5 shadow rounded border border-primary w-75">
+        <div class="col">
+        <form action="{{ url_for('site.update_workout', exercise_id=exercise.id) }}" method="POST">
+            <label for="sets">Sets:</label>
+            <input type="number" name="sets" value="{{ exercise.sets }}" required>
+            <label for="sets">Reps:</label>
+            <input type="number" name="repetitions" value="{{ exercise.repetitions }}" required>
+            <button type="submit">Update Workout</button>
+        </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

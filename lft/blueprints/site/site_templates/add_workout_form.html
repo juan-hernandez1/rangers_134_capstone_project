@@ -1,0 +1,19 @@
+
+
+{% block content %}
+    <!-- <h1>Add Workout</h1> -->
+    <form action="{{ url_for('site.add_workout') }}" method="POST">
+        <label for="exercise_id">Exercise:</label>
+        <select id="exercise_id" name="exercise_id">
+            {% for exercise in exercises %}
+                <!-- <strong>Name:</strong> {{ exercise['name'] }}<br> -->
+                <option value="{{ exercise.id }}">{{ exercise['name'] }}</option>
+            {% endfor %}
+        </select>
+        <label for="sets">Sets:</label>
+        <input type="number" name="sets" required>
+        <label for="repetitions">Repetitions:</label>
+        <input type="number" name="repetitions" required>
+        <button type="submit">Add To Workout</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="row mt-5 p-5 shadow rounded border border-danger w-75">
+        <div class="col">
+            <h3>Delete Account</h3>
+            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+            <form action="" method="POST">
+                {{ form.csrf_token }}
+                {{ form.confirm_delete(class='btn btn-danger', type='submit') }}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

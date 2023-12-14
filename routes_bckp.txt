@@ -1,0 +1,196 @@
+from flask import Blueprint, flash, redirect, render_template, request, url_for
+
+
+
+# internal imports
+from lft.models import Exercise, Workout, workout_exercise_association, db
+from lft.helpers import get_exercises
+
+
+
+
+# need to instantiate our Blueprint class
+site = Blueprint('site', __name__, template_folder='site_templates' )
+
+
+
+# use site object to create our routes
+@site.route('/')
+def lft():
+    return render_template('lft.html') # looking inside our template_folder (site_templates) to find our lft.html file
+
+#  route to display "the vault" page
+@site.route('/vault')
+def index():
+    return render_template('vault.html')
+
+# route to handle form submission in "the vault"
+@site.route('/search', methods=['POST'])
+def search():
+    body_part = request.form['body_part']
+    exercises = get_exercises(body_part)
+    
+    
+    return render_template('vault.html', exercises = exercises)
+
+
+# route to display "get to work" page with workouts
+@site.route('/workout')
+def get_to_work():
+    workouts = Workout.query.all()
+    return render_template('workout.html', workouts = workouts)
+
+# route to handle adding a workout
+@site.route('/add_workout', methods=['GET', 'POST'])
+def add_workout():
+    if request.method == 'POST':
+        # Handle the POST request
+        exercise_id = request.form.get('exercise_id')
+        if exercise_id is None:
+            flash("Error: No exercise selected for the workout.", category='error')
+            return redirect('/workout')
+        
+        if 'sets' in request.form:
+            sets = int(request.form['sets'])
+        if 'repetitions' in request.form:
+            repetitions = int(request.form['repetitions'])
+
+        else:
+            # flash("Error: 'sets' not found in form data", category='error')
+            # flash("Error: 'reps' not found in form data", category='error')
+            return redirect('/workout')
+        
+        print(f"Exercise ID: {exercise_id}")
+        print(f"Sets: {sets}")
+        print(f"Repetitions: {repetitions}")
+        
+        # added this:
+        # workout = Workout(sets=sets, repetitions=repetitions)
+        # workout.save()  # Save the workout first to obtain an ID
+
+        exercise = Exercise.query.get(exercise_id)
+        # exercises = Exercise.query.filter(Exercise.id.in_(exercise_ids)).all()
+        # if exercise is None:
+        #     flash("Error: Selected exercise not found.", category='error')
+        #     return redirect('/workout')
+
+        # exercise_names = ', '.join([exercise.name for exercise in exercises])      
+        workout = Workout(sets = sets, repetitions = repetitions)
+        workout.add_exercise(exercise)
+
+        # db.session.add(workout)
+        # db.session.commit()
+        # print(f"Exercises: {exercises}")
+        
+        # print("Exercise:", exercise)
+        # print(f"Workout ID before adding exercises: {workout.id}")
+
+        
+
+        # for exercise in exercises:
+        #     workout.add_exercise(exercise)
+
+        # workout.set_exercise_names()
+
+        # db.session.add(workout)
+        # db.session.commit()
+
+        # print(f"Workout ID after adding exercises: {workout.id}")
+        # print(f'Exercise: {exercise.name}')
+        
+
+        # workout.save()       
+        
+        # print(f"Exercises: {exercises}")
+
+        if exercise.name:
+            flash(f"You have successfully added {exercise.name} to your workout", category='success')
+        else:
+            flash("You have successfully added an exercise to your workout", category='success')
+
+        # flash(f"You have successfully added {exercise.name} to your workout", category='success')
+
+
+
+
+        # if exercises:
+        #     workout.add_exercise(exercises[0])  # Add the first exercise to initialize the relationship
+        #     workout.set_exercise_names(exercises)
+        #     flash(f"You have successfully added {', '.join([exercise.name for exercise in exercises])} to your workout", category='success')
+        # else:
+        #     flash("No exercises selected for the workout.", category='error')
+        # workout.add_exercise(exercises[0])  # Add the first exercise to initialize the relationship
+        
+        # workout.set_exercise_names(exercises)
+
+        # workout = Workout(exercise_names=', '.join([exercise.name for exercise in exercises]), sets=sets, repetitions=repetitions)
+        
+        # workout.save()
+
+        # exercise_names = ', '.join([exercise.name for exercise in exercises])
+        # workout = Workout(exercise_names = exercise_names, sets = sets, repetitions = repetitions)
+        
+        # workout = Workout(sets = sets, repetitions = repetitions)
+        
+        
+        
+        # print(exercise_names)
+       
+        # for exercise in exercises:
+        #     # workout.exercises.append(exercise)
+        #     workout.add_exercise(exercise)
+
+        
+
+        # db.session.add(workout)
+        # db.session.commit()
+
+        # flash(f"You have successfully added {exercise_names} to your workout", category='success')
+        # flash(f"You have successfully added {', '.join([exercise.name for exercise in exercises])} to your workout", category='success')
+        return redirect('/workout')
+    else:
+        # Handle the GET request (if needed)
+        # For example, render a form for selecting exercises
+        exercises = Exercise.query.all()
+        return render_template('add_workout_form.html', exercises = exercises)
+
+
+# route to handle updating a workout
+@site.route('/update_workout/<int:workout_id>', methods=['GET', 'POST'])
+def update_workout(workout_id):
+
+    # let's grab the specific workout that we want to update
+    workout = Workout.query.get(workout_id)
+    # workout.sets = int(request.form['sets'])
+    # workout.repetitions = int(request.form['reps'])
+
+    if request.method == 'POST':
+        workout.sets = int(request.form['sets'])
+    
+    if request.method == 'POST':
+        workout.repetitions = int(request.form['repetitions'])
+
+    # Update the exercise_names based on the selected exercises
+        exercise_ids = request.form.getlist('exercise_ids')
+        exercises = Exercise.query.filter(Exercise.id.in_(exercise_ids)).all()
+        workout.exercise_names = ', '.join([exercise.name for exercise in exercises])
+
+
+        db.session.commit()
+        return redirect('/workout')
+
+    return render_template('update_workout_form.html', workout = workout)
+    
+
+# route to handle deleting a workout
+@site.route('/delete_workout/<int:workout_id>')
+def delete_workout(workout_id):
+    
+    # query our database to find the object we want to delete
+    workout = Workout.query.get(workout_id)
+
+    db.session.delete(workout)
+    db.session.commit()
+    
+    # flash(f"You have successfully deleted {exercises.name} from your workout", category='success')
+    return redirect('/workout')
