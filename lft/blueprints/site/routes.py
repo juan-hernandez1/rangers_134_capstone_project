@@ -97,11 +97,6 @@ def add_workout(id, name, body_part, equipment, target):
             db.session.commit()
             flash(f"You have successfully added {exercise_name} to your workout", category='success')
 
-            db.session.add(exercise)
-            db.session.commit()
-
-       
-
         return redirect('/workout')
 
     else:
@@ -111,28 +106,16 @@ def add_workout(id, name, body_part, equipment, target):
         return render_template('vault.html', exercises = exercises)
 
 
-
-
 # route to handle updating a workout
 @site.route('/update_workout/<int:exercise_id>', methods=['GET', 'POST'])
 def update_workout(exercise_id):
 
     # let's grab the specific workout that we want to update
     exercise = Exercise.query.get(exercise_id)
-    # workout.sets = int(request.form['sets'])
-    # workout.repetitions = int(request.form['reps'])
 
     if request.method == 'POST':
         exercise.sets = int(request.form['sets'])
-    
-    # if request.method == 'POST':
         exercise.repetitions = int(request.form['repetitions'])
-
-    # Update the exercise_names based on the selected exercises
-        # exercise_ids = request.form.getlist('exercise_ids')
-        # exercises = Exercise.query.filter(Exercise.id.in_(exercise_ids)).all()
-        # exercise.exercise_names = ', '.join([exercise.name for exercise in exercises])
-
 
         db.session.commit()
 
