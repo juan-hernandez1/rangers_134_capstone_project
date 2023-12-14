@@ -103,13 +103,13 @@ class Exercise(db.Model):
 # data needs to look like a dictionary (json) not an object)
 
 
-# class ExerciseSchema(ma.Schema):
+class ExerciseSchema(ma.Schema):
 
-#     class Meta:
-#         fields = ['exercise_id', 'body_part', 'equipment', 'gif_url', 'name', 'quantity']
+    class Meta:
+        fields = ['exercise_id', 'body_part', 'equipment', 'name', 'target', 'sets', 'repetitions', 'gif_url', ]
 
 
 
 # # instantiate our ExerciseSchema class so we can use them in our application
-# exercise_schema = ExerciseSchema() # this is 1 singular exercise
-# exercises_schema = ExerciseSchema(many=True) # bringing back all the exercises in our database & sending to frontend
+exercise_schema = ExerciseSchema() # this is 1 singular exercise
+exercises_schema = ExerciseSchema(many=True) # bringing back all the exercises in our database & sending to frontend

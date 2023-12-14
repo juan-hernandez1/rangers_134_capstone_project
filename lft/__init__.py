@@ -7,6 +7,7 @@ from flask_jwt_extended import JWTManager
 # internal imports
 from .blueprints.site.routes import site # add this import to grab our site blueprint
 from .blueprints.auth.routes import auth
+from .blueprints.api.routes import api
 from config import Config
 from .models import login_manager, db
 
@@ -27,6 +28,7 @@ login_manager.login_message_category = 'warning'
 
 app.register_blueprint(site) # add this here to register your site blueprint
 app.register_blueprint(auth)
+app.register_blueprint(api)
 
 
 
