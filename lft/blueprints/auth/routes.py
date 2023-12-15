@@ -48,7 +48,7 @@ def signup():
 
 
         flash(f"You have successfully registered user {username}", category='success')
-        return redirect('/signin')
+        return redirect('/')
     
     return render_template('sign_up.html', form=registerform )
 

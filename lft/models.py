@@ -93,12 +93,6 @@ class Exercise(db.Model):
     
 
 
-
-
-
-
-
-
 # creating our Schema class (Schema essentially just means what our data "looks" like, and our 
 # data needs to look like a dictionary (json) not an object)
 

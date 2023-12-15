@@ -1,16 +1,50 @@
-{% extends 'base.html' %}
+<!-- {% extends 'base.html' %} -->
 
-{% block content %}
-<div class="container d-flex justify-content-center align-items-center">
-    <div class="row mt-5 p-5 shadow rounded border border-danger w-75">
-        <div class="col">
-            <h3>Delete Account</h3>
-            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
-            <form action="" method="POST">
-                {{ form.csrf_token }}
-                {{ form.confirm_delete(class='btn btn-danger', type='submit') }}
-            </form>
+<!-- {% block content %} -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/static/css/signin.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <a href="/">
+            <button class="close-button">
+                <i class="fa-solid fa-xmark"></i>
+              </button>
+        </a>      
+        <a class="logo" href="/">
+          <i class="fa-solid fa-dumbbell" style="color: #ff2f0af3;"></i>
+        </a>
+      </div>
+
+      <div class="content">
+        <h1>Delete My Account</h1>
+
+        <div class="delete-account">
+          <p>Are you sure you want to delete your account?</p>
         </div>
+
+        <form action="{{ url_for('auth.delete_account') }}" method="POST">
+          {{ form.hidden_tag() }}
+
+          <div class="action-buttons">
+            <!-- <button class="primary-button" type="submit">{{ form.confirm_delete.label }}</button> -->
+            <button class="primary-button" type="submit">Delete My Account</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="sign-up">
+        <p>Not ready to delete your account? <a href="/">Go back</a></p>
+      </div>
     </div>
-</div>
-{% endblock %}
+  </body>
+</html>
+<!-- {% endblock %} -->

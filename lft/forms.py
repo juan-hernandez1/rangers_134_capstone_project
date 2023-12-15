@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, IntegerField, DecimalField, SubmitField 
 from wtforms.validators import DataRequired, Email, EqualTo
 
+
 # creating our login & register forms 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[ DataRequired(), Email()])

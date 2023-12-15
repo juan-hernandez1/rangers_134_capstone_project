@@ -1,61 +1,82 @@
-{% extends 'base.html' %}
+<!-- {% extends 'base.html' %} -->
 
 
-{% block content %}
+<!-- {% block content %} -->
 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="/static/css/signin.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <a href="/">
+            <button class="close-button">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </a>
+        <a class="logo" href="/">
+            <i class="fa-solid fa-dumbbell" style="color: #ff2f0af3;"></i>
+        </a>
+      </div>
 
-<div class="container d-flex justify-content-center align-items-center">
-    <div class="row mt-5 p-5 shadow rounded border border-primary w-75">
-        <div class="col d-flex">
-            <img src="https://images.unsplash.com/photo-1590487988256-9ed24133863e?q=80&w=1928&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class='img-fluid rounded' alt="" srcset="">
-        </div>
-        <div class="col">
-            <form action="" class="row g-3" method="POST">
-                {{ form.hidden_tag() }}
-                <h3>Register Now!</h3>
-                <div class="col-md-6">
-                    {{ form.first_name.label }}
-                    {{ form.first_name(class='form-control mt-2', placeholder='John') }}
-                </div>
-                <div class="col-md-6">
-                    {{ form.last_name.label }}
-                    {{ form.last_name(class='form-control mt-2', placeholder='Doe') }}
-                </div>
-                <div class="col-12">
-                    {{ form.username.label }}
-                    {{ form.username(class='form-control mt-2', placeholder='jdoe' ) }}
-                    {% for error in form.username.errors %}
-                        <span class="err-msg"> {{ error }}</span>
-                    {% endfor %}
-                </div>
-                <div class="col-12">
-                    {{ form.email.label }}
-                    {{ form.email(class='form-control mt-2', placeholder='jdoe@gmail.com' ) }}
-                    {% for error in form.email.errors %}
-                        <span class="err-msg"> {{ error }}</span>
-                    {% endfor %}
-                </div>
-                <div class="col-6">
-                    {{ form.password.label }}
-                    {{ form.password(class='form-control mt-2', placeholder='password' ) }}
-                    {% for error in form.password.errors %}
-                        <span class="err-msg"> {{ error }}</span>
-                    {% endfor %}
-                </div>
-                <div class="col-6">
-                    {{ form.confirm_password.label }}
-                    {{ form.confirm_password(class='form-control mt-2', placeholder='password' ) }}
-                    {% for error in form.confirm_password.errors %}
-                        <span class="err-msg"> {{ error }}</span>
-                    {% endfor %}
-                </div>
-                <div class="col-12">
-                    {{ form.submit(class='btn btn-primary') }}
-                </div>
-            </form>
-        </div>
+      <div class="content">
+        <h1>Sign Up for L1FT</h1>
+
+        <form action="{{ url_for('auth.signup') }}" method="POST">
+          {{ form.hidden_tag() }}
+
+          <div class="name-fields">
+            <div class="first-name">
+              {{ form.first_name.label }}
+              {{ form.first_name(placeholder="First Name") }}
+            </div>
+
+            <div class="last-name">
+              {{ form.last_name.label }}
+              {{ form.last_name(placeholder="Last Name") }}
+            </div>
+          </div>
+
+          <div class="username-field">
+            {{ form.username.label }}
+            {{ form.username(placeholder="Username") }}
+          </div>
+
+          <div class="email-log-in">
+            {{ form.email.label }}
+            {{ form.email(placeholder="Email") }}
+          </div>
+
+          <div class="pw-log-in">
+            <div class="password-field">
+              {{ form.password.label }}
+              {{ form.password(placeholder="password") }}
+            </div>
+
+            <div class="confirm-password-field">
+              {{ form.confirm_password.label }}
+              {{ form.confirm_password(placeholder="password") }}
+            </div>
+          </div>
+
+          <div class="action-buttons">
+            <!-- <button class="primary-button" type="submit">{{ form.submit.label }}</button> -->
+            <button class="primary-button" type="submit">Sign Up</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="sign-up">
+        <p>Already have an account? <a href="/signin">Log in</a></p>
+      </div>
     </div>
-</div>
+  </body>
+</html>
 
-
-{% endblock content %}
+<!-- {% endblock content %} -->
