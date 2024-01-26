@@ -69,6 +69,7 @@ class User(db.Model, UserMixin):
 
 class Exercise(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    exercise_id = db.Column(db.Integer)
     body_part = db.Column(db.String(50))
     equipment = db.Column(db.String(50))
     gif_url = db.Column(db.String)
@@ -79,8 +80,8 @@ class Exercise(db.Model):
     created_at = db.Column(db.DateTime, default = datetime.utcnow)
     user_id = db.Column(db.String, db.ForeignKey("user.user_id"), nullable=False)
 
-    def __init__(self, id, body_part, equipment, name, target, sets, repetitions, user_id, gif_url=""):
-        self.id = id
+    def __init__(self, exercise_id, body_part, equipment, name, target, sets, repetitions, user_id, gif_url=""):
+        self.exercise_id = exercise_id
         self.body_part = body_part
         self.equipment = equipment
         self.gif_url = gif_url
