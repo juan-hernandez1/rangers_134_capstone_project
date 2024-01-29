@@ -107,7 +107,7 @@ def add_workout(id, name, body_part, equipment, target):
 
 
 # route to handle updating a workout
-@site.route('/update_workout/<int:exercise_id>', methods=['GET', 'POST'])
+@site.route('/update_workout/<exercise_id>', methods=['GET', 'POST'])
 def update_workout(exercise_id):
 
     # let's grab the specific workout that we want to update
@@ -126,7 +126,7 @@ def update_workout(exercise_id):
     
 
 # route to handle deleting a workout
-@site.route('/delete_workout/<int:exercise_id>')
+@site.route('/delete_workout/<exercise_id>')
 def delete_workout(exercise_id):
     
     # query our database to find the object we want to delete

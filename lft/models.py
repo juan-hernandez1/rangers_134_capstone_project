@@ -68,7 +68,7 @@ class User(db.Model, UserMixin):
     exercises = db.relationship('Exercise', backref='user', lazy=True, cascade='all, delete-orphan')
 
 class Exercise(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     exercise_id = db.Column(db.Integer)
     body_part = db.Column(db.String(50))
     equipment = db.Column(db.String(50))
@@ -81,6 +81,7 @@ class Exercise(db.Model):
     user_id = db.Column(db.String, db.ForeignKey("user.user_id"), nullable=False)
 
     def __init__(self, exercise_id, body_part, equipment, name, target, sets, repetitions, user_id, gif_url=""):
+        self.id = self.set_id()
         self.exercise_id = exercise_id
         self.body_part = body_part
         self.equipment = equipment
@@ -90,7 +91,9 @@ class Exercise(db.Model):
         self.sets = sets
         self.repetitions = repetitions
         self.user_id = user_id
-
+    
+    def set_id(self):
+        return str(uuid.uuid4())
     
 
 
